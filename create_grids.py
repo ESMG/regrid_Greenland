@@ -97,7 +97,8 @@ def create_grid_gebco():
 
 def create_grid_gebco_arctic(ds, fileout):
     """ subset gebco grid where bedmachine exists (and Arctic6 grid exists) """
-    gebco_SO = ds.sel(lat=slice(58.5, 84.17),lon=slice(-90.9, 9.27))
+#   gebco_SO = ds.sel(lat=slice(58.5, 84.17),lon=slice(-90.9, 9.27))
+    gebco_SO = ds.sel(lat=slice(58.5, 84.17),lon=slice(-76.7, -4.6))
     gebco_SO['lon'].attrs = dict(units='degrees_east')
     gebco_SO['lat'].attrs = dict(units='degrees_north')
     gebco_encoding = {'lon': {'dtype': 'float64'},
@@ -123,7 +124,7 @@ if __name__ == '__main__':
     create_grid_gebco_arctic(gebco15, 'grid_gebco_15sec_northof58.nc')
 
     # create bedmachine grid:
-#    bedmachine = create_bedmachine_xy()
+#   bedmachine = create_bedmachine_xy()
     bedmachine = xr.open_dataset('/import/AKWATERS/kshedstrom/bathy/BedMachineGreenland-2017-09-20.nc')
     bedmachine = add_lon_lat(bedmachine, PROJSTRING)
     bedmachine_encoding = {'lon': {'dtype': 'float64', '_FillValue': 1.0e+15},
